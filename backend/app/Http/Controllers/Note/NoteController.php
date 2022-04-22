@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Note;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Services\NoteService;
+use App\Http\Requests\NoteRequest;
+use App\Http\Services\NoteService;
+use Illuminate\Http\JsonResponse;
 
 class NoteController extends Controller
 {
@@ -15,8 +17,24 @@ class NoteController extends Controller
         $this->noteService = $noteService;
     }
 
-    public function list()
+    public function list(Request $request): JsonResponse
     {
-        return "test";
+        try {
+            $notes = $this->noteService->all($request->all());
+            return response()->json(['result' => 'success', 'notes' => $notes], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['result' => 'fail', 'message' => $th->getMessage()], 400);
+        }
+    }
+
+    public function store(NoteRequest $request): JsonResponse
+    {
+        try {
+            $validated = $request->validated();
+            $note = $this->noteService->addNote($validated);
+            return response()->json(['result' => 'success', 'note' => $note], 201);
+        } catch (\Throwable $th) {
+            return response()->json(['result' => 'fail', 'message' => $th->getMessage()], 400);
+        }
     }
 }
