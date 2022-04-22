@@ -4,8 +4,6 @@ namespace App\Http\Services;
 
 use App\Models\Note;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Http\JsonResponse;
-use Nette\Utils\Json;
 
 class NoteService{
 
