@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Note\NoteController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::prefix('note')->group(function(){
+    Route::get('/list', [NoteController::class, 'list']);
+    Route::post('/add', [NoteController::class, 'store']);
+    Route::put('/update/{id}', [NoteController::class, 'update']);
+    Route::delete('/delete/{id}', [NoteController::class, 'destroy']);
 });
