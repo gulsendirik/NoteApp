@@ -35,4 +35,18 @@ class NoteService{
             'isDone' => ($attributes['isDone'] == "true") ? 1 : 0
         ]);
     }
+
+    public function update(array $attributes, int $id)
+    {
+        $note = $this->noteModel->where('id', $id)->first();
+        return $note->update([
+            'isDone' => ($attributes['isDone'] == "true") ? 1 : 0
+        ]);
+    }
+
+    public function delete(int $id)
+    {
+        return $this->noteModel->findOrFail($id)->delete();
+    }
+
 }

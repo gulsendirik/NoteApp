@@ -37,4 +37,24 @@ class NoteController extends Controller
             return response()->json(['result' => 'fail', 'message' => $th->getMessage()], 400);
         }
     }
+
+    public function update($id): JsonResponse
+    {
+        try {
+            $note = $this->noteService->update(Request()->all(), $id);
+            return response()->json(['result' => 'success'], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['result' => 'fail', 'message' => $th->getMessage()], 400);
+        }
+    }
+
+    public function destroy($id)
+    {
+        try {
+            $note = $this->noteService->delete($id);
+            return response()->json(['result' => 'success'], 204);
+        } catch (\Throwable $th) {
+            return response()->json(['result' => 'fail', 'message' => $th->getMessage()], 400);
+        }
+    }
 }
