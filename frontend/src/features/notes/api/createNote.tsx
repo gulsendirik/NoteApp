@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 import { axios } from "../../../lib/axios";
 import { MutationConfig, queryClient } from "../../../lib/react-query";
@@ -13,6 +14,7 @@ type CreateNoteOptions = {
 };
 
 export const useCreateNote = ({ config }: CreateNoteOptions = {}) => {
+  const toast = useToast();
   return useMutation({
     ...config,
     onMutate: async (note: CreateNoteDTO) => {
@@ -33,9 +35,21 @@ export const useCreateNote = ({ config }: CreateNoteOptions = {}) => {
       if (context?.previousNotes) {
         queryClient.setQueryData(noteKeys.lists(), context.previousNotes);
       }
+      toast({
+        title: "Error",
+        position: "top-right",
+        status: "error",
+        isClosable: true,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(noteKeys.lists());
+      toast({
+        title: "Note added successfully",
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
     },
     mutationFn: createNote,
   });

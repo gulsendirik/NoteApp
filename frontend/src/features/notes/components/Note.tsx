@@ -1,5 +1,5 @@
 import { CheckIcon, DeleteIcon, MinusIcon } from "@chakra-ui/icons";
-import { Button, GridItem, Text } from "@chakra-ui/react";
+import { Button, GridItem, Text, useToast } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import { useDeleteNote } from "../api/deleteNote";
 import { useUpdateNote } from "../api/updateNote";

@@ -51,8 +51,9 @@ const NoteList = () => {
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) =>
     setTitle(e.target.value);
 
-  const handleCreateNote = () =>
+  const handleCreateNote = () => {
     createNoteMutation.mutate({ title }, { onSuccess: clearTitle });
+  };
 
   return (
     <>

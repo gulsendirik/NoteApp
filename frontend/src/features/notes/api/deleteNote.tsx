@@ -1,3 +1,4 @@
+import { useToast } from "@chakra-ui/react";
 import { useMutation } from "react-query";
 import { axios } from "../../../lib/axios";
 import { MutationConfig, queryClient } from "../../../lib/react-query";
@@ -16,6 +17,7 @@ type DeleteNotesOptions = {
 };
 
 export const useDeleteNote = ({ config }: DeleteNotesOptions = {}) => {
+  const toast = useToast();
   return useMutation({
     ...config,
     onMutate: async ({ noteID }: DeleteNotesProps) => {
@@ -34,9 +36,21 @@ export const useDeleteNote = ({ config }: DeleteNotesOptions = {}) => {
           context.previousNote
         );
       }
+      toast({
+        title: "Error",
+        position: "top-right",
+        status: "error",
+        isClosable: true,
+      });
     },
     onSuccess: () => {
       queryClient.invalidateQueries(noteKeys.all);
+      toast({
+        title: "Note deleted successfully",
+        position: "top-right",
+        status: "success",
+        isClosable: true,
+      });
     },
     mutationFn: deleteNote,
   });
