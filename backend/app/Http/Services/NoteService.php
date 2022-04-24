@@ -21,8 +21,9 @@ class NoteService{
             $dataPerPage = $attributes['dataPerPage'];
         }
             return $this->noteModel
-            ->selectRaw("title, isDone")
+            ->selectRaw("id, title, isDone")
             ->with($eagerLoad)
+            ->orderBy('created_at', 'desc')
             ->paginate($dataPerPage);
     }
 
@@ -30,7 +31,7 @@ class NoteService{
     {
         return $this->noteModel->create([
             'title' => $attributes['title'],
-            'isDone' => ($attributes['isDone'] == "true") ? 1 : 0
+            'isDone' => 0
         ]);
     }
 
