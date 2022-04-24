@@ -30,8 +30,7 @@ class NoteService{
     public function addNote(array $attributes) 
     {
         return $this->noteModel->create([
-            'title' => $attributes['title'],
-            'isDone' => 0
+            'title' => $attributes['title']
         ]);
     }
 
